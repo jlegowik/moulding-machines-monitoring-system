@@ -1,0 +1,50 @@
+server:
+  port: 8080
+  context-path: /${spring.application.name}/
+
+management:
+  context-path: /${spring.application.name}/manage
+  security:
+    enabled: false
+  port: 8081
+
+spring:
+  application:
+    name: moulding-machines-monitoring-system
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/machine_metrics
+    username: admin
+    password: admin
+  redis:
+    host: localhost
+    embedded: true
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+
+ogel:
+  moulding-machines-monitoring-system:
+    norm-gross-production-bricks-per-hour: 30000
+    # percentage
+    norm-uptime: 0.75
+
+---
+spring:
+  profiles: test
+
+---
+spring:
+  profiles: stage
+  redis:
+    embedded: false
+---
+spring:
+  profiles: prod
+  redis:
+    embedded: false
+
